@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $title ?> | Chat App </title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.7.5/dist/emoji-picker-element.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:wght@200;300;400;600&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", serif;
+            font-weight: 300;
+            font-style: normal
+        }
+
+        body {
+            /* background-color: blue/; */
+            background: rgb(2, 0, 36);
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(58, 2, 2, 0.9808298319327731) 9%, rgba(9, 9, 121, 1) 35%, rgba(81, 7, 150, 1) 49%, rgba(5, 23, 179, 1) 63%, rgba(144, 10, 216, 1) 81%, rgba(113, 1, 241, 1) 93%, rgba(0, 212, 255, 1) 100%);
+            height: 100%;
+            width: 100%;
+        }
+
+        .conteiner {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .main-box {
+            background: rgba(0, 0, 0, 0.7);
+            height: 93vh;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .right-box {
+            border-radius: 12px 0px 0px 12px;
+            background: transparent;
+            height: 100%;
+            width: 345px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #dddddd35;
+        }
+
+        .left-box {
+            border-radius: 0px 12px 12px 0px;
+            background: transparent;
+            height: 100%;
+            width: 345px;
+        }
+
+        .right-header {
+            background-color: transparent;
+            border-bottom: 1px solid #dddddd35;
+            width: 100%;
+            height: 80px;
+            border-radius: 12px 0px 0px 0px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            gap: 25px;
+            font-family: "Poppins", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .profile {
+            margin-left: 12px;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        .header-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .right-context {
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            border-radius: 0px 0px 0px 12px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .listeer {
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .user-box {
+            display: flex;
+            padding: 20px;
+            flex-direction: row;
+            border-bottom: 1px solid #dddddd35;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .user-box>span>img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 6px;
+        }
+
+        .header-add button {
+            border-radius: 50%;
+            outline: none;
+            border: none;
+            /* background: transparent; */
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .center-box {
+            background: transparent;
+            height: 100%;
+            width: 650px;
+            border-right: 1px solid #dddddd35;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .center-header {
+            font-family: "Poppins", serif;
+            font-weight: 400;
+            font-style: normal;
+            background-color: transparent;
+            border-bottom: 1px solid #dddddd35;
+            width: 100%;
+            height: 71px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            gap: 25px;
+            padding: 26px;
+        }
+
+        .center-img img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .center-text-box {
+            width: 100%;
+            height: 66px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-top: 1px solid #dddddd35;
+            font-family: "Fira Sans", serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        .center-sec input {
+            height: 54px;
+            width: 440px;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        .center-sec input::placeholder {
+            padding: 12px;
+        }
+
+        .center-sec button {
+            height: 54px;
+            width: 55px;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+        }
+
+        .center-fi button {
+            border-radius: 50%;
+            outline: none;
+            border: none;
+            /* background: transparent; */
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Hide the emoji picker by default */
+        emoji-picker {
+            display: none;
+            position: absolute;
+            bottom: 90px;
+            /* Adjust based on your layout */
+            z-index: 100;
+        }
+
+        .emoji-btn:focus+emoji-picker,
+        emoji-picker.show {
+            display: block;
+        }
+
+        .center-msg-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            overflow: scroll;
+            gap: 20px;
+            padding: 18px;
+        }
+
+        .message {
+            max-width: 70%;
+            display: flex;
+            border-radius: 4px;
+            padding: 18px;
+            /* background-color: red; */
+            width: 182px;
+        }
+
+        .own {
+            display: flex;
+            align-self: flex-end;
+            gap: 10px;
+            background: #5183fe;
+        }
+
+        .rec {
+            display: flex;
+            align-self: flex-start;
+            gap: 10px;
+            background: rgb(83, 226, 147);
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .own>.text span {
+            /* display: flex;
+            align-self: flex-end;
+            margin-top: 4px;
+            font-size : 8px; */
+            display: flex;
+            /* align-self: flex-end; */
+            margin-top: 9px;
+            font-size: 9px;
+            /* justify-content: end; */
+            align-items: start;
+            justify-content: end;
+            position: relative;
+            right: -80px;
+        }
+
+        .text :last-child {
+            margin-top: 4px;
+        }
+
+        .center-icon {
+            display: flex;
+            flex-direction: row;
+            gap: 18px;
+        }
+
+        /* // last bar */
+        .left-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 12px;
+        }
+
+        .show-box {
+            border-top: 1px solid #dddddd35;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 12px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .image-box {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            gap: 18px;
+        }
+
+        .image-box img {
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .action-box {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .block-btn {
+            width: 100%;
+            height: 40px;
+            border-radius: 6px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            background: #e54b4be0;
+            color: white;
+            font-weight: 600;
+            transition: 0.6s all ease-out;
+        }
+
+        .action-box a {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+            border: none;
+        }
+
+        .action-box>a {
+            width: 100%;
+            height: 40px;
+            border-radius: 6px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            background: #e54b4be0;
+            color: white;
+            font-weight: 600;
+            transition: 0.6s all ease-out;
+        }
+
+        .action-box a :hover {
+            background: #dd2525;
+            /* animation:  0.3s ease-in; */
+        }
+
+        .block-btn:hover {
+            background: #dd2525;
+            /* animation:  0.3s ease-in; */
+        }
+
+        .right-context>* {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <?php
+    $this->db = \Config\Database::connect();
+    $this->user = $this->db->table('user');
+    $this->id = session('login')['id'];
+    $user = $this->user->getWhere(['id' => $this->id])->getRow();
+    ?>
+    <div class="conteiner">
+        <div class="main-box">
+            <div class="right-box">
+                <div class="right-header">
+                    <div class="profile">
+                        <?php if (!empty($user->file_loc)): ?>
+                            <img src="<?= $user->file_loc ?>" alt="<?= $user->name ?>" title="<?= $user->name ?>">
+                        <?php else: ?>
+                            <img src="<?= base_url('/image/images.jpg') ?>" alt="<?= session('login')['name'] ?>">
+                        <?php endif; ?>
+                    </div>
+                    <div class="header-name" onclick="getfrnd()">
+                        <?= $user->name ?>
+                    </div>
+                    <div class="header-add" onclick="getlistfrnd()">
+                        <button><i class="fa-solid fa-user-plus"></i></button>
+                    </div>
+                </div>
+                <div class="right-context">
+                    <!-- <button onclick="getfrnd()">g</button> -->
+                    <div class="listeer">
+                    </div>
+                </div>
+            </div>
+            <div class="center-box" id="center_box">
+            </div>
+            <div class="left-box">
+            </div>
+        </div>
+    </div>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script>
+        function sendmsg(receiver_id) {
+            const sender_id = <?= $this->id ?>;
+            const message = $('#messageInput').val().trim();
+            if (message === '') {
+                alert('Please enter a message.');
+                return;
+            }
+
+            $.post('<?= site_url('chat/sendMessage'); ?>', {
+                message: message,
+                sender_id: sender_id,
+                receiver_id: receiver_id
+            }, function (response) {
+                if (response.status === 'success') {
+                    appendMessage(sender_id, message);
+                    $('#messageInput').val('');
+                    const pusher = new Pusher('<?= getenv('PUSHER_APP_KEY'); ?>', {
+                        cluster: '<?= getenv('PUSHER_APP_CLUSTER'); ?>'
+                    });
+                    pusher.trigger('chat-channel', 'new-message', {
+                        sender_id: sender_id,
+                        receiver_id: receiver_id,
+                        message: message
+                    });
+                } else {
+                    alert('Failed to send message.');
+                }
+            });
+        }
+
+        function appendMessage(senderId, message) {
+            const currentTime = new Date();
+            const timeAgo = timeSince(currentTime); // Get time since message was sent
+            let messageHTML = `
+            <div class="message ${senderId === <?= $this->id ?> ? 'own' : 'rec'}">
+                <div class="text">
+                    <p>${message}</p>
+                    <span>${timeAgo}</span>
+                </div>
+            </div>`;
+            $('#messageBox').append(messageHTML);
+            smoothScroll();
+        }
+
+        function smoothScroll() {
+            // $('#messageBox').animate({
+            //     scrollTop: $('#messageBox')[0].scrollHeight
+            // }, 500);
+        }
+
+        function timeSince(date) {
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            let interval = seconds / 31536000;
+
+            if (interval > 1) {
+                return Math.floor(interval) + " year" + (Math.floor(interval) > 1 ? "s" : "") + " ago";
+            }
+            interval = seconds / 2592000;
+            if (interval > 1) {
+                return Math.floor(interval) + " month" + (Math.floor(interval) > 1 ? "s" : "") + " ago";
+            }
+            interval = seconds / 86400;
+            if (interval > 1) {
+                return Math.floor(interval) + " day" + (Math.floor(interval) > 1 ? "s" : "") + " ago";
+            }
+            interval = seconds / 3600;
+            if (interval > 1) {
+                return Math.floor(interval) + " hour" + (Math.floor(interval) > 1 ? "s" : "") + " ago";
+            }
+            interval = seconds / 60;
+            if (interval > 1) {
+                return Math.floor(interval) + " minute" + (Math.floor(interval) > 1 ? "s" : "") + " ago";
+            }
+            return Math.floor(seconds) + " second" + (Math.floor(seconds) > 1 ? "s" : "") + " ago";
+        }
+
+        const receiver_id = $('#recdata').val();
+        const sender_id = <?= $this->id ?>;
+        const pusher = new Pusher('<?= getenv('PUSHER_APP_KEY'); ?>', {
+            cluster: '<?= getenv('PUSHER_APP_CLUSTER'); ?>'
+        });
+
+        const channel = pusher.subscribe('chat-channel');
+        channel.bind('new-message', function (data) {
+            if ((data.sender_id === sender_id && data.receiver_id === receiver_id) ||
+                (data.sender_id === receiver_id && data.receiver_id === sender_id)) {
+                appendMessage(data.sender_id, data.message);
+            }
+        });
+    </script>
+
+    <!-- <script>
+        // $('.send').click(function () {
+        function sendmsg(receiver_id) {
+            console.log(receiver_id);
+            const sender_id = <?= $this->id ?>;
+            const message = $('#messageInput').val().trim();
+            if (message === '') {
+                alert('Please enter a message.');
+                return;
+            }
+            $.post('<?= site_url('chat/sendMessage'); ?>', {
+                message: message,
+                sender_id: <?= $this->id ?>,
+                receiver_id: receiver_id
+            }, function (response) {
+                if (response.status === 'success') {
+                    appendMessage(sender_id, message);
+                    $('#messageInput').val('');
+                } else {
+                    alert('Failed to send message.');
+                }
+            });
+        }
+        function appendMessage(senderId, message) {
+            let messageHTML = `<div class="message ${senderId === sender_id ? 'own' : 'rec'}">
+                        <div class="text">
+                            <p>${message}</p>
+                            <span># min ago</span>
+                        </div>
+                    </div>`;
+            $('#messageBox').append(messageHTML);
+            $('#messageBox').scrollTop($('#messageBox')[0].scrollHeight);
+        }
+        const receiver_id = $('#recdata').val();
+        const sender_id = <?= $this->id ?>;
+        const pusher = new Pusher('<?= getenv('PUSHER_APP_KEY'); ?>', {
+            cluster: '<?= getenv('PUSHER_APP_CLUSTER'); ?>'
+        });
+        const channel = pusher.subscribe('chat-channel');
+        channel.bind('new-message', function (data) {
+            if ((data.sender_id === sender_id && data.receiver_id === receiver_id) ||
+                (data.sender_id === receiver_id && data.receiver_id === sender_id)) {
+                appendMessage(data.sender_id, data.message);
+            }
+        });
+    </script> -->
+
+    <script>
+        function getfrnd() {
+            $.ajax({
+                url: '<?= base_url('user-frined') ?>',
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    $('.listeer').html(res);
+                }
+            })
+        }
+        getfrnd();
+    </script>
+    <script>
+        function block(id) {
+            $.ajax({
+                url: '<?= base_url('block/') ?>' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    // sid_bar(id)
+                }
+            })
+        }
+        function unblock(id) {
+            $.ajax({
+                url: '<?= base_url('unblock/') ?>' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    // sid_bar(id)
+                }
+            })
+        }
+        function sid_bar(id) {
+            load_bar(id);
+            $.ajax({
+                url: '<?= base_url('side-bar/') ?>' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    $('.left-box').html(res);
+                }
+            })
+        }
+        function load_bar(id) {
+            $.ajax({
+                url: '<?= base_url('load-msg/') ?>' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    $('#center_box').html(res);
+                    // $('#messageBox').scrollTop($('#messageBox')[0].scrollHeight);
+                }
+            })
+        }
+        function frn(id) {
+            $.ajax({
+                url: '<?= base_url('rqst-sent/') ?>' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    getlistfrnd();
+                }
+            })
+        }
+        function frns(id) {
+            $.ajax({
+                url: '<?= base_url('add-sent/') ?>' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    getlistfrnd();
+                }
+            })
+        }
+        function getlistfrnd() {
+            $.ajax({
+                url: '<?= base_url('frined') ?>',
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    $('.listeer').html(res);
+                }
+            })
+        }
+        sid_bar(<?= $this->id ?>);
+    </script>
+
+    <script>
+        // File Picker functionality
+        document.querySelector('.file-btn').addEventListener('click', function () {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.click();
+
+            fileInput.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    alert('Selected file: ' + file.name);
+                }
+            });
+        });
+
+        // Emoji Picker functionality
+        const emojiBtn = document.querySelector('.emoji-btn');
+        const emojiPicker = document.getElementById('emojiPicker');
+
+        emojiBtn.addEventListener('click', function () {
+            emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block';
+        });
+
+        emojiPicker.addEventListener('emoji-click', function (e) {
+            const emoji = e.detail.unicode;
+            const inputField = document.getElementById('messageInput');
+            inputField.value += emoji; // Add the selected emoji to the input field
+            emojiPicker.style.display = 'none'; // Close the emoji picker after selection
+        });
+    </script>
+    <script>
+        $('#logout').on('click', function () {
+            $.ajax({
+                url: '<?= base_url('logout') ?>',
+                type: 'GET',
+                success: function (res) {
+                    window.location.href = '/';
+                }
+            })
+        })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1.7.5/dist/emoji-picker-element.min.js"></script>
+</body>
+
+</html>
